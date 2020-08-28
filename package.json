@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
   },
   "repository": {
     "type": "git",
@@ -16,9 +18,13 @@
     "url": "https://github.com/ajayraj201651006/Recipe/issues"
   },
   "homepage": "https://github.com/ajayraj201651006/Recipe#readme",
-  "dependencies": {},
+  "dependencies": {
+    "path": "^0.12.7"
+  },
   "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }
