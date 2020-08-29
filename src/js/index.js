@@ -23,19 +23,23 @@ const controlSearch = async () => {
     if(query) {
         // 2. create search object in the state
         state.search = new Search(query);
-        
-        // 3. prepare the UI for results
-        searchView.clearInput();
-        searchView.clearResult();
-        renderLoader(elements.searchRes);
 
-        // 4. get results for search
-        await state.search.getRecipes();
-
-        // 5. Renders results on the UI
-        // console.log(state.search.result);
-        clearLoader();
-        searchView.renderResults(state.search.result);
+        try {
+            // 3. prepare the UI for results
+            searchView.clearInput();
+            searchView.clearResult();
+            renderLoader(elements.searchRes);
+    
+            // 4. get results for search
+            await state.search.getRecipes();
+    
+            // 5. Renders results on the UI
+            // console.log(state.search.result);
+            clearLoader();
+            searchView.renderResults(state.search.result);
+        } catch(error) {
+            console.log('Something went wrong with the search recipes..!')
+        }
     }
 }
 
@@ -55,6 +59,29 @@ elements.searchResPages.addEventListener('click', e => {
 
 
 //RECIPE CONTROLLER
-const recipe = new Recipe(47746);
-recipe.getRecipe();
-console.log(recipe);
+const controlRecipe = async () => {
+    const id = window.location.hash.replace('#', '');
+    if(id) {
+        //preapare UI for changes
+
+        //create recipe object
+        state.recipe = new Recipe(id);
+
+        try {
+            //get recipe from recipe model
+            await state.recipe.getRecipe();
+    
+            //calculate servings and times
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+    
+            //render recipe on the UI
+            console.log(state.recipe);
+        } catch(error) {
+            console.log('Something went wrong to get recipes!');
+        }
+
+    }
+}
+
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
