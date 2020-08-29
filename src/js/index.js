@@ -70,6 +70,7 @@ const controlRecipe = async () => {
         try {
             //get recipe from recipe model
             await state.recipe.getRecipe();
+            state.recipe.parsedIngredients();
     
             //calculate servings and times
             state.recipe.calcTime();
@@ -78,6 +79,7 @@ const controlRecipe = async () => {
             //render recipe on the UI
             console.log(state.recipe);
         } catch(error) {
+            console.log(error);
             console.log('Something went wrong to get recipes!');
         }
 
