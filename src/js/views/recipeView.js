@@ -1,9 +1,9 @@
 import { elements } from './base';
 
 const gcd = (a, b) => {
-    if (b < 0.0000001) return a;           
-  
-    return gcd(b, Math.floor(a % b)); 
+    if (b < 0.0000001) return a;
+
+    return gcd(b, Math.floor(a % b));
 };
 
 const decimalToFraction = (dec) => {
@@ -11,8 +11,8 @@ const decimalToFraction = (dec) => {
     let denominator = Math.pow(10, len);
     let numerator = dec * denominator;
     let divisor = gcd(numerator, denominator);
-    if(divisor !== 1) {
-        numerator /= divisor;                         
+    if (divisor !== 1) {
+        numerator /= divisor;
         denominator /= divisor;
     } else {
         denominator = numerator;
@@ -23,15 +23,15 @@ const decimalToFraction = (dec) => {
 }
 
 const formatCount = count => {
-    if(count) {
+    if (count) {
         const [int, dec] = count.toString().split('.').map(el => parseInt(el));
-    
-        if(!dec) return count;
-    
-        if(int === 0) {
+
+        if (!dec) return count;
+
+        if (int === 0) {
             return decimalToFraction((count).toFixed(1));
         } else {
-            return `${int} ${decimalToFraction((count-int).toFixed(1))}`;
+            return `${int} ${decimalToFraction((count - int).toFixed(1))}`;
         }
     }
     return '?';
@@ -49,22 +49,14 @@ const createIngredient = ingredient => {
                 ${ingredient.ingredient}
             </div>
         </li>  
-    `; 
+    `;
 };
 
 export const clearRecipe = () => {
     elements.searchRecipe.innerHTML = '';
 };
 
-export const highletedSelected = id => {
-    const resultArr = Array.from(document.querySelectorAll('.results__link'));
-    resultArr.forEach(el => {
-        el.classList.remove('results__link--active');
-    });
-    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
-};
-
-export const renderRecipe = recipe => {
+export const renderRecipe = (recipe, isLiked) => {
     const markup = `
             <figure class="recipe__fig">
                 <img src="${recipe.img}" alt="${recipe.title}" class="recipe__img">
@@ -104,7 +96,7 @@ export const renderRecipe = recipe => {
                 </div>
                 <button class="recipe__love">
                     <svg class="header__likes">
-                        <use href="img/icons.svg#icon-heart-outlined"></use>
+                        <use href="img/icons.svg#icon-heart${isLiked ? '' : '-outlined'}"></use>
                     </svg>
                 </button>
             </div>

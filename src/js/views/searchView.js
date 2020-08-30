@@ -1,6 +1,6 @@
 import { elements, elementStrings } from './base';
 
-export const getInput = () => elements.searchInput.value; 
+export const getInput = () => elements.searchInput.value;
 
 export const clearInput = () => {
     elements.searchInput.value = '';
@@ -11,11 +11,19 @@ export const clearResult = () => {
     elements.searchResPages.innerHTML = '';
 };
 
-const limitRecipeTitle = (title, limit = 15) => {
+export const highletedSelected = id => {
+    const resultArr = Array.from(document.querySelectorAll('.results__link'));
+    resultArr.forEach(el => {
+        el.classList.remove('results__link--active');
+    });
+    document.querySelector(`.results__link[href*="#${id}"]`).classList.add('results__link--active');
+};
+
+export const limitRecipeTitle = (title, limit = 15) => {
     const newTitle = [];
-    if(title.length > limit) {
+    if (title.length > limit) {
         title.split(' ').reduce((acc, curr) => {
-            if(acc + curr.length <= limit) {
+            if (acc + curr.length <= limit) {
                 newTitle.push(curr);
             }
             return acc + curr.length;
@@ -52,20 +60,20 @@ const createButton = (page, type) => `<button class="btn-inline results__btn--${
 
 export const renderButtons = (page, numResult, resPerPage) => {
     const pages = Math.ceil(numResult / resPerPage);
-    
+
     let button;
-    if(page === 1 && pages > 1) {
-       //1st page go to next
-       button = createButton(page, 'next');
-    } else if(page < pages) {
-       //both pages
-       button = `
+    if (page === 1 && pages > 1) {
+        //1st page go to next
+        button = createButton(page, 'next');
+    } else if (page < pages) {
+        //both pages
+        button = `
        ${createButton(page, 'prev')}
        ${createButton(page, 'next')}
        `;
-    } else if(page === pages && pages > 1) {
-       //end pages
-       button = createButton(page, 'prev');
+    } else if (page === pages && pages > 1) {
+        //end pages
+        button = createButton(page, 'prev');
     }
 
     elements.searchResPages.insertAdjacentHTML('afterbegin', button);
