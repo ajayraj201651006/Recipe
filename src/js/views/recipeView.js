@@ -142,3 +142,15 @@ export const renderRecipe = recipe => {
 
     elements.searchRecipe.insertAdjacentHTML("afterbegin", markup);
 }
+
+export const updateServingIngredients = recipe => {
+    //update servings
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+    //update ingredients
+    const arrIngredients = Array.from(document.querySelectorAll('.recipe__count'));
+
+    arrIngredients.forEach((curr, index) => {
+        curr.textContent = formatCount(recipe.ing[index].count);
+    });
+}
