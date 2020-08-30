@@ -1,6 +1,4 @@
 import { elements } from './base';
-// import { Fraction } from 'fractional';
-
 
 const gcd = (a, b) => {
     if (b < 0.0000001) return a;           
