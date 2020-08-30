@@ -1,6 +1,7 @@
 import Search from './models/Search'; //importing the search class
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader, elementStrings } from './views/base';
 
 /****
@@ -63,6 +64,11 @@ const controlRecipe = async () => {
     const id = window.location.hash.replace('#', '');
     if(id) {
         //preapare UI for changes
+        recipeView.clearRecipe();
+        renderLoader(elements.searchRecipe);
+
+        //highlighted the selected search item
+        if(state.search) recipeView.highletedSelected(id);
 
         //create recipe object
         state.recipe = new Recipe(id);
@@ -77,7 +83,8 @@ const controlRecipe = async () => {
             state.recipe.calcServings();
     
             //render recipe on the UI
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         } catch(error) {
             console.log(error);
             console.log('Something went wrong to get recipes!');
